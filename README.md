@@ -5,6 +5,6 @@ Displays a text object containing each pet in the party in the format 'OwnerName
 
     //lua load PartyPets
     
-No addon specific commands - all automatic for now. Invisible when there are no pets in the party.
+No addon specific commands - all automatic for now. Invisible when there are no pets in the party. Click and drag to move the addon.
 
 Let me know if you have any questions or feature requests!
