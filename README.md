@@ -9,5 +9,4 @@ No addon specific commands - all automatic for now. Invisible when there are no 
 
 Let me know if you have any questions or feature requests!
 
-Example:
 ![PartyPets Image](https://github.com/elprice/PartyPets/blob/master/example.PNG)
