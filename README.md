@@ -1,7 +1,7 @@
 # PartyPets
 ### Active pet hpp display for your whole party. Useful for multiboxing or pet parties.
 
-Displays a text object containing each pet in the party in the format 'OwnerName - PetName: Pethpp' and attempts to right-align the hpp values. Will show pets that are out of range, released, or hpp 0 as DEAD. 
+Displays a text object containing each pet in the party in the format 'OwnerName - PetName: Pethpp' and attempts to right-align the hpp values. Will show pets that are out of range, released, or hpp = 0 as DEAD. 
 
     //lua load PartyPets
     
