@@ -10,4 +10,4 @@ No addon specific commands - all automatic for now. Invisible when there are no 
 Let me know if you have any questions or feature requests!
 
 Example:
-[[https://github.com/elprice/PartyPets/blob/master/example.PNG]]
+[[https://github.com/elprice/PartyPets/blob/master/example.PNG?raw=true]]
