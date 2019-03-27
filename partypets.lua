@@ -107,8 +107,6 @@ function do_stuff()
         data.petinfo = petdata
         pet_props:update(data)
         pet_props:show()
-    elseif party.p0 == nil then
-        pet_props:hide()
     end
 end
 
