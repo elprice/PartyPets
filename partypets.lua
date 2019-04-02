@@ -13,7 +13,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 _addon.name = "partypets"
 _addon.author = "Eikken"
-_addon.version = "1.0"
+_addon.version = "1.1"
+_addon.commands = {"pp"}
 
 require('luau')
 texts = require('texts')
@@ -59,21 +60,14 @@ function colorize_hpp(hpp)
     return hpp
 end
 
-function pad_spaces(str, max_len)
+function pad_spaces(str, max_len, hpp)
+    local default_pad = 4 
     local str_len = string.len(str)
-    max_len = max_len == 0 and str_len or max_len 
-    local pad_num = max_len % 8 + max_len - str_len + 1
+    max_len = max_len == 0 and str_len or max_len --max_len of 0 can happen after death 
+    local hpp_len = hpp == 0 and 4 or string.len(hpp) --if hpp = 0 then text should be DEAD which is 4 long
+    local total_pad_length = max_len - str_len + default_pad - hpp_len
     local spaces = '                                                           ' -- because why not just in case
-    return string.sub(spaces, 0, pad_num)
-end
-
-function get_max_petstr_length(party)
-    for k,v in pairs(party) do
-        if type(party[k]) == "table" and party[k].mob ~= nil and party[k].mob.pet_index ~= nil then
-            local pet = windower.ffxi.get_mob_by_index(party[k].mob.pet_index)
-        end
-    end
-    return max
+    return string.sub(spaces, 0, total_pad_length)
 end
 
 function do_stuff()
@@ -92,21 +86,23 @@ function do_stuff()
                 pet_info.hpp = pet.hpp
                 pet_info.time = os.time()
                 pets[pet_info.owner_name] = pet_info
-                max_len = math.max(max_len, string.len(party[k].name..pet.name..pet.hpp))
+                max_len = math.max(max_len, string.len(party[k].name..pet.name))
             end
         end
         for k,v in pairs(pets) do
-            if os.time() - pets[k].time < 6 then --keep label for a bit in case out of range or the pet died
+            if os.time() - pets[k].time < 30 then --keep label for 10s in case out of range or pet died
                 --incase pet died between updates
-                if type(party[pets[k].owner_index]) == "table" and party[pets[k].owner_index].mob ~= nil and party[pets[k].owner_index].mob.pet_index == nil then--and pets[k].hpp > 0 then 
+                if type(party[pets[k].owner_index]) == "table" and party[pets[k].owner_index].mob ~= nil and party[pets[k].owner_index].mob.pet_index == nil then
                     pets[k].hpp = 0
                 end
-                petdata = petdata..pets[k].owner_name.." - "..pets[k].name..": "..pad_spaces(pets[k].owner_name..pets[k].name..pets[k].hpp, max_len)..colorize_hpp(pets[k].hpp).."\n"
+                petdata = petdata..pets[k].owner_name.." - "..pets[k].name..": "..pad_spaces(pets[k].owner_name..pets[k].name, max_len, pets[k].hpp)..colorize_hpp(pets[k].hpp).."\n"
             end
         end
         data.petinfo = petdata
         pet_props:update(data)
         pet_props:show()
+    elseif party.p0 == nil then
+        pet_props:hide()
     end
 end
 
