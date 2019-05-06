@@ -90,12 +90,12 @@ function do_stuff()
             end
         end
         for k,v in pairs(pets) do
-            if os.time() - pets[k].time < 30 then --keep label for 10s in case out of range or pet died
+            if os.time() - pets[k].time < 10 then --keep label for 10s in case out of range or pet died
                 --incase pet died between updates
                 if type(party[pets[k].owner_index]) == "table" and party[pets[k].owner_index].mob ~= nil and party[pets[k].owner_index].mob.pet_index == nil then
                     pets[k].hpp = 0
                 end
-                petdata = petdata..pets[k].owner_name.." - "..pets[k].name..": "..pad_spaces(pets[k].owner_name..pets[k].name, max_len, pets[k].hpp)..colorize_hpp(pets[k].hpp).."\n"
+                petdata = petdata..pets[k].owner_name.." - "..pets[k].name..":"..pad_spaces(pets[k].owner_name..pets[k].name, max_len, pets[k].hpp)..colorize_hpp(pets[k].hpp).."\n"
             end
         end
         data.petinfo = petdata
