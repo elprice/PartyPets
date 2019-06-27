@@ -36,7 +36,6 @@ initialize = function(text, settings)
     text:clear()
     text:append(properties:concat('\n'))
 end
-pet_props:register_event('reload', initialize)
 
 function colorize_hpp(hpp)
     local temp
@@ -79,14 +78,16 @@ function do_stuff()
         for k,v in pairs(party) do
             if type(party[k]) == "table" and party[k].mob ~= nil and party[k].mob.pet_index ~= nil then
                 local pet = windower.ffxi.get_mob_by_index(party[k].mob.pet_index)
-                pet_info = {}
-                pet_info.owner_index = k
-                pet_info.owner_name = party[k].name
-                pet_info.name = pet.name
-                pet_info.hpp = pet.hpp
-                pet_info.time = os.time()
-                pets[pet_info.owner_name] = pet_info
-                max_len = math.max(max_len, string.len(party[k].name..pet.name))
+                if pet ~= nil then
+                    pet_info = {}
+                    pet_info.owner_index = k
+                    pet_info.owner_name = party[k].name
+                    pet_info.name = pet.name
+                    pet_info.hpp = pet.hpp
+                    pet_info.time = os.time()
+                    pets[pet_info.owner_name] = pet_info
+                    max_len = math.max(max_len, string.len(party[k].name..pet.name))
+                end
             end
         end
         for k,v in pairs(pets) do
@@ -106,9 +107,11 @@ function do_stuff()
     end
 end
 
+
+pet_props:register_event('reload', initialize)
+
 windower.register_event('load', function()
-    data = {}
-    pets = {}
+    initialize()
     do_loop = do_stuff:loop(settings.UpdateFrequency)
 end)
 
