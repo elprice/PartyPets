@@ -117,3 +117,8 @@ windower.register_event('unload', function()
     pets = {}
     coroutine.close(do_loop)
 end)
+
+windower.register_event('zone change', function()
+    data = {}
+    pets = {}
+end)
