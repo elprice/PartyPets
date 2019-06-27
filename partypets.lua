@@ -111,7 +111,6 @@ end
 pet_props:register_event('reload', initialize)
 
 windower.register_event('load', function()
-    initialize()
     do_loop = do_stuff:loop(settings.UpdateFrequency)
 end)
 
